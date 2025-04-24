@@ -1,0 +1,62 @@
+
+version: '3.9'
+services:
+  # сервис базы данных
+  db:
+    image: mysql:8.0
+    container_name: my_wp_db 
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: zxcASDqwe!@#123
+      MYSQL_DATABASE: wordpress_db
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: zxcASDqwe!@#123
+    networks:
+      - wpsite
+
+  # сервис wordpress
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    container_name: my_wp_site
+    ports:
+      - "8000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: 'wordpress'
+      WORDPRESS_DB_PASSWORD: 'zxcASDqwe!@#123'
+      WORDPRESS_DB_NAME: 'wordpress_db'
+      WORDPRESS_DEBUG: 1
+
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    networks: 
+      - wpsite
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: my_wp_phpmyadmin
+    depends_on:
+      - db
+    ports:
+      - "8181:80"
+
+    environment:
+      PMA_HOST: db
+
+    networks:
+      - wpsite
+
+volumes:
+  db_data: {}
+
+networks:
+  wpsite:
+    driver: bridge
+
+  
+
