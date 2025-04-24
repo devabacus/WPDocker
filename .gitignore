@@ -46,7 +46,7 @@ wp-content/vendor/
 /wp-content/plugins/*
 
 # ...КРОМЕ вашего плагина 'fr-core' (убедитесь, что имя папки совпадает)
-!/wp-content/plugins/fr-core/
+!/wp-content/plugins/fr-plugin/
 # (Игнорируем стандартные плагины, которые могут быть добавлены)
 !/wp-content/plugins/index.php
 # (Явно игнорируем стандартные, чтобы случайно не добавить)
